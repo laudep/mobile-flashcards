@@ -1,0 +1,32 @@
+# Android
+.idea
+.gradle
+local.properties
+*.iml
+/android/
+
+# Watchman
+.watchmanconfig
+
+# Node
+node_modules
+*.log
+.nvm
+/bots/node_modules/
+# package-lock.json
+
+# OS X
+.DS_Store
+
+# Other
+.expo
+build/
+*.log*
+chrome-user-data
+*.sublime-project
+*.sublime-workspace
+.idea
+*.iml
+.vscode
+*.swp
+*.swo
