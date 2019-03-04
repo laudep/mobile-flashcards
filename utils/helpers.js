@@ -1,6 +1,5 @@
 import { AsyncStorage } from "react-native";
 import _ from "lodash";
-import { testData } from "./testData";
 
 const STORAGE_KEY = "MobileFlashcards:decks";
 

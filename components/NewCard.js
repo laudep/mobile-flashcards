@@ -1,10 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView
+} from "react-native";
 import { handleNewCard } from "../actions";
 import { connect } from "react-redux";
 import MainTextButton from "./MainTextButton";
 import Colors from "../constants/Colors";
 import { Constants } from "expo";
+import { getId } from "../utils/helpers";
 
 class NewCard extends Component {
   state = {
@@ -20,20 +27,18 @@ class NewCard extends Component {
   };
 
   handleSubmit = () => {
-    const { handleCardAddition, id, navigation } = this.props;
+    const { handleCardAddition, toCardOverview } = this.props;
     const card = {
       question: this.state.question,
       answer: this.state.answer
     };
-    handleCardAddition(id, card);
-    navigation.navigate("Deck", {
-      id: id
-    });
+    handleCardAddition(card);
+    toCardOverview();
   };
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
         <Text>Fill in the card's question and answer.</Text>
         <TextInput
           style={styles.input}
@@ -51,7 +56,7 @@ class NewCard extends Component {
         <MainTextButton onPress={() => this.handleSubmit()}>
           Create Card
         </MainTextButton>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBackground,
     paddingTop: Constants.statusBarHeight,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "flex-start"
   },
   input: {
     backgroundColor: Colors.primary,
@@ -73,15 +78,20 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, props) {
   return {
-    id: props.navigation.getParam("id", "No id found.")
+    id: getId(props.navigation)
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, { navigation }) {
+  const id = getId(navigation);
   return {
-    handleCardAddition: (id, card) => {
+    handleCardAddition: card => {
       dispatch(handleNewCard(id, card));
-    }
+    },
+    toCardOverview: () =>
+      navigation.navigate("Deck", {
+        id: id
+      })
   };
 }
 

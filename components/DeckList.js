@@ -1,24 +1,35 @@
+import {
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
-import { connect } from "react-redux";
+
 import Colors from "../constants/Colors";
+import { connect } from "react-redux";
 import { handleInitialData } from "../actions";
 
 class DeckList extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerRight: (
-        <Button
-          onPress={() => navigation.navigate("NewDeck")}
-          title="New"
-          color={Colors.primary}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("NewDeck")}>
+          {Platform.OS === "ios" ? (
+            <Ionicons name="ios-add" color={Colors.primary} size={40} />
+          ) : (
+            <MaterialIcons name="add" color={Colors.primary} size={40} />
+          )}
+        </TouchableOpacity>
       )
     };
   };
 
   componentDidMount() {
-    this.props.dispatch(handleInitialData());
+    this.props.getInitialData();
   }
 
   navigateToDeck = id => {
@@ -27,6 +38,18 @@ class DeckList extends Component {
     });
   };
 
+  _renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => this.navigateToDeck(item.title)}
+      style={styles.deck}
+    >
+      <Text>{item.title}</Text>
+      <Text>{"Contains " + item.questions.length + " cards"}</Text>
+    </TouchableOpacity>
+  );
+
+  _keyExtractor = (item, index) => item.title;
+
   render() {
     const { decks, loading } = this.props;
     return (
@@ -34,18 +57,12 @@ class DeckList extends Component {
         {loading === true ? (
           <Text>Please create a flashcard deck.</Text>
         ) : (
-          <View style={{ backgroundColor: Colors.white }}>
-            {Object.values(decks).map(deck => (
-              <TouchableOpacity
-                onPress={() => this.navigateToDeck(deck.title)}
-                key={deck.title}
-                style={styles.deck}
-              >
-                <Text>{deck.title}</Text>
-                <Text>{"Contains " + deck.questions.length + " cards"}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <FlatList
+            style={styles.deckList}
+            data={Object.values(decks)}
+            renderItem={this._renderItem}
+            keyExtractor={this._keyExtractor}
+          />
         )}
       </View>
     );
@@ -55,18 +72,29 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.lightPurple,
     alignItems: "center",
     justifyContent: "center"
   },
+  deckList: {
+    backgroundColor: Colors.lightPurple,
+    flex: 1
+  },
   deck: {
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.primary,
     margin: 20,
     padding: 20,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center"
   }
 });
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getInitialData: () => dispatch(handleInitialData())
+  };
+}
 
 function mapStateToProps({ decks }) {
   return {
@@ -75,4 +103,7 @@ function mapStateToProps({ decks }) {
   };
 }
 
-export default connect(mapStateToProps)(DeckList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeckList);

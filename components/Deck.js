@@ -1,32 +1,24 @@
 import React, { Component } from "react";
 import { Constants } from "expo";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Button,
-  StyleSheet,
-  Dimensions
-} from "react-native";
-
+import { View, Text, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import Colors from "../constants/Colors";
 import Pluralize from "pluralize";
-import { getDeck } from "../actions";
 import MainTextButton from "./MainTextButton";
 import { getId } from "../utils/helpers";
 
 class Deck extends Component {
   render() {
-    const { deck } = this.props;
+    const { deck, navigation } = this.props;
+    const questionCount = deck.questions.length;
     return (
       <View style={styles.container}>
         <Text>{deck.title}</Text>
-        <Text>{Pluralize("Card", deck.questions.length, true)}</Text>
+        <Text>{Pluralize("Card", questionCount, true)}</Text>
 
         <MainTextButton
           onPress={() =>
-            this.props.navigation.navigate("NewCard", {
+            navigation.navigate("NewCard", {
               id: deck.title
             })
           }
@@ -35,14 +27,14 @@ class Deck extends Component {
         </MainTextButton>
 
         <MainTextButton
-          disabled={deck.questions.length === 0}
+          disabled={questionCount === 0}
           onPress={() =>
-            this.props.navigation.navigate("Quiz", {
+            navigation.navigate("Quiz", {
               id: deck.title
             })
           }
         >
-          Start Quiz
+          Start a Quiz
         </MainTextButton>
       </View>
     );

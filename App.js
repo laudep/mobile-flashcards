@@ -8,6 +8,7 @@ import { createAppContainer, createStackNavigator } from "react-navigation";
 import DeckList from "./components/DeckList";
 import Deck from "./components/Deck";
 import Quiz from "./components/Quiz";
+import QuizResult from "./components/QuizResult";
 import NewDeck from "./components/NewDeck";
 import NewCard from "./components/NewCard";
 import Colors from "./constants/Colors";
@@ -46,6 +47,12 @@ const stackNavigator = createStackNavigator({
     screen: Quiz,
     navigationOptions: {
       title: "Quiz"
+    }
+  },
+  QuizResult: {
+    screen: QuizResult,
+    navigationOptions: {
+      title: "Quiz Result"
     }
   }
 });

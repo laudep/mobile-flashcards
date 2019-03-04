@@ -1,6 +1,7 @@
-import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+
 import Colors from "../constants/Colors";
+import React from "react";
 
 export default function MainTextButton({
   children = {},

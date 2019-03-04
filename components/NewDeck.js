@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  KeyboardAvoidingView
+} from "react-native";
 import { connect } from "react-redux";
 import { handleNewDeck } from "../actions";
 import MainTextButton from "./MainTextButton";
@@ -13,26 +19,31 @@ class NewDeck extends Component {
 
   handleSubmit = () => {
     if (this.state.title.length < 3) return;
-    this.props.handleDeckAddition(this.state.title);
-    this.props.navigation.navigate("Home");
+    const { handleDeckAddition, toDeck } = this.props;
+
+    handleDeckAddition(this.state.title).then(() => toDeck(title));
   };
 
   render() {
+    const { title } = this.state;
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
         <Text>Choose a title for the new deck.</Text>
 
         <TextInput
           style={styles.input}
           onChangeText={title => this.setState({ title })}
-          value={this.state.title}
+          value={title}
           placeholder="Deck Title"
         />
 
-        <MainTextButton onPress={() => this.handleSubmit()}>
+        <MainTextButton
+          disabled={title.length === 0}
+          onPress={() => this.handleSubmit()}
+        >
           Create Deck
         </MainTextButton>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -52,11 +63,16 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
     handleDeckAddition: title => {
       dispatch(handleNewDeck(title));
-    }
+    },
+    toDeck: title =>
+      navigation.navigate("Deck", {
+        id: title
+      })
+    // toHomeScreen: () => navigation.navigate("Home")
   };
 };
 
