@@ -1,10 +1,13 @@
 import { AsyncStorage } from "react-native";
 import _ from "lodash";
+import { testData } from "./testData";
 
 const STORAGE_KEY = "MobileFlashcards:decks";
 
 export function getDecks() {
-  return AsyncStorage.getItem(STORAGE_KEY);
+  return AsyncStorage.getItem(STORAGE_KEY).then(data => {
+    return JSON.parse(data);
+  });
 }
 
 export function getDeck(id) {
