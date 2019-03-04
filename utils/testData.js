@@ -6,7 +6,7 @@ export let testData = {
         answer: "A framework for building native apps using React."
       },
       {
-        question: "Which React Native component can be considedered the equivalent to HTML's <div> tag?",
+        question: "Which React Native component can be considered the equivalent to HTML's <div> tag?",
         answer: "The <View> component."
       },
       {
