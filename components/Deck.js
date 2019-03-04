@@ -1,12 +1,49 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { warningBackground } from "../constants/Colors";
+import { Constants } from "expo";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Button,
+  StyleSheet,
+  Dimensions
+} from "react-native";
+
+import { connect } from "react-redux";
+import Colors from "../constants/Colors";
+import Pluralize from "pluralize";
+import { getDeck } from "../actions";
+import MainTextButton from "./MainTextButton";
+import { getId } from "../utils/helpers";
 
 class Deck extends Component {
   render() {
+    const { deck } = this.props;
     return (
       <View style={styles.container}>
-        <Text>Deck</Text>
+        <Text>{deck.title}</Text>
+        <Text>{Pluralize("Card", deck.questions.length, true)}</Text>
+
+        <MainTextButton
+          onPress={() =>
+            this.props.navigation.navigate("NewCard", {
+              id: deck.title
+            })
+          }
+        >
+          New Card
+        </MainTextButton>
+
+        <MainTextButton
+          disabled={deck.questions.length === 0}
+          onPress={() =>
+            this.props.navigation.navigate("Quiz", {
+              id: deck.title
+            })
+          }
+        >
+          Start Quiz
+        </MainTextButton>
       </View>
     );
   }
@@ -15,10 +52,19 @@ class Deck extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: warningBackground,
+    backgroundColor: Colors.lightPurple,
+    paddingTop: Constants.statusBarHeight,
     alignItems: "center",
     justifyContent: "center"
   }
 });
 
-export default Deck;
+function mapStateToProps({ decks }, props) {
+  const id = getId(props.navigation);
+  const deck = Object.values(decks).filter(deck => deck.title === id);
+  return {
+    deck: deck[0]
+  };
+}
+
+export default connect(mapStateToProps)(Deck);

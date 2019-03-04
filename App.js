@@ -7,16 +7,46 @@ import { StyleSheet, View } from "react-native";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 import DeckList from "./components/DeckList";
 import Deck from "./components/Deck";
-import { pink } from "./constants/Colors";
+import Quiz from "./components/Quiz";
+import NewDeck from "./components/NewDeck";
+import NewCard from "./components/NewCard";
+import Colors from "./constants/Colors";
 
 const store = createStore(reducer, middleware);
 
 const stackNavigator = createStackNavigator({
-  DeckList: {
-    screen: DeckList
+  Home: {
+    screen: DeckList,
+    navigationOptions: {
+      title: "Decks"
+    }
   },
   Deck: {
-    screen: Deck
+    screen: Deck,
+    navigationOptions: {
+      title: "Deck"
+    },
+    headerStyle: {
+      backgroundColor: Colors.lightPurple
+    }
+  },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      title: "New Deck"
+    }
+  },
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: {
+      title: "New Card"
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: "Quiz"
+    }
   }
 });
 

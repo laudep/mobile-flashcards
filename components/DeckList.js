@@ -1,10 +1,22 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { connect } from "react-redux";
 import Colors from "../constants/Colors";
 import { handleInitialData } from "../actions";
 
 class DeckList extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerRight: (
+        <Button
+          onPress={() => navigation.navigate("NewDeck")}
+          title="New"
+          color={Colors.primary}
+        />
+      )
+    };
+  };
+
   componentDidMount() {
     this.props.dispatch(handleInitialData());
   }
@@ -24,15 +36,14 @@ class DeckList extends Component {
         ) : (
           <View style={{ backgroundColor: Colors.white }}>
             {Object.values(decks).map(deck => (
-              <View style={styles.deck} key={deck.title}>
+              <TouchableOpacity
+                onPress={() => this.navigateToDeck(deck.title)}
+                key={deck.title}
+                style={styles.deck}
+              >
                 <Text>{deck.title}</Text>
                 <Text>{"Contains " + deck.questions.length + " cards"}</Text>
-                <TouchableOpacity
-                  onPress={() => this.navigateToDeck(deck.title)}
-                >
-                  <Text>View Deck</Text>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         )}
@@ -50,7 +61,10 @@ const styles = StyleSheet.create({
   },
   deck: {
     backgroundColor: Colors.pink,
-    margin: 20
+    margin: 20,
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 

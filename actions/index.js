@@ -1,4 +1,4 @@
-import { getDecks } from "../utils/helpers";
+import { getDecks, saveDeckTitle, addCardToDeck } from "../utils/helpers";
 
 export const RECEIVE_DECKS = "RECEIVE_DECKS";
 export const GET_DECK = "GET_DECK";
@@ -27,14 +27,30 @@ export function getDeck(id) {
   };
 }
 
-export function addDeck(title) {
+export function handleNewDeck(title) {
+  return dispatch => {
+    return saveDeckTitle(title).then(() => {
+      dispatch(addDeck(title));
+    });
+  };
+}
+
+function addDeck(title) {
   return {
     type: ADD_DECK,
     title
   };
 }
 
-export function addCard(title, card) {
+export function handleNewCard(title, card) {
+  return dispatch => {
+    return addCardToDeck(title, card).then(() => {
+      dispatch(addCard(title, card));
+    });
+  };
+}
+
+function addCard(title, card) {
   return {
     type: ADD_CARD,
     title,
