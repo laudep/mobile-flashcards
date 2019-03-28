@@ -38,7 +38,8 @@ class Quiz extends Component {
     this.setState(prevState => ({
       ...prevState,
       questionIndex: questionIndex,
-      correctAnswers: correctAnswers
+      correctAnswers: correctAnswers,
+      showAnswer: false
     }));
   };
 
