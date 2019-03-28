@@ -40,7 +40,7 @@ class NewDeck extends Component {
         />
 
         <MainTextButton
-          disabled={title.length === 0}
+          disabled={title.length < 3}
           onPress={() => this.handleSubmit()}
         >
           Create Deck
