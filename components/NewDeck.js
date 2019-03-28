@@ -18,10 +18,12 @@ class NewDeck extends Component {
   };
 
   handleSubmit = () => {
-    if (this.state.title.length < 3) return;
     const { handleDeckAddition, toDeck } = this.props;
+    const { title } = this.state;
 
-    handleDeckAddition(this.state.title).then(() => toDeck(title));
+    if (title.length < 3) return;
+
+    handleDeckAddition(title).then(() => toDeck(title));
   };
 
   render() {
@@ -65,9 +67,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
-    handleDeckAddition: title => {
-      dispatch(handleNewDeck(title));
-    },
+    handleDeckAddition: title => dispatch(handleNewDeck(title)),
     toDeck: title =>
       navigation.navigate("Deck", {
         id: title

@@ -112,4 +112,4 @@ function mapStateToProps({ decks }, { navigation }) {
   };
 }
 
-export default connect(mapStateToProps)(Quiz);
+export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
