@@ -1,9 +1,10 @@
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Alert } from "react-native";
 import _ from "lodash";
 import { Notifications, Permissions } from "expo";
 
 const STORAGE_KEY = "MobileFlashcards:decks";
 const NOTIFICATION_KEY = "MobileFlashcards:notifications";
+let alertShown = false;
 
 export function getId(navigation) {
   let id = "No id found.";
@@ -78,26 +79,44 @@ export function setLocalNotification() {
     .then(JSON.parse)
     .then(data => {
       if (data === null) {
-        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
-          if (status === "granted") {
-            Notifications.cancelAllScheduledNotificationsAsync();
+        Permissions.askAsync(Permissions.NOTIFICATIONS)
+          .then(({ status }) => {
+            if (status === "granted") {
+              Notifications.cancelAllScheduledNotificationsAsync();
 
-            let tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(20);
-            tomorrow.setMinutes(0);
+              let tomorrow = new Date();
+              tomorrow.setDate(tomorrow.getDate() + 1);
+              tomorrow.setHours(20);
+              tomorrow.setMinutes(0);
 
-            Notifications.scheduleLocalNotificationAsync(createNotification(), {
-              time: tomorrow,
-              repeat: "day"
-            });
+              Notifications.scheduleLocalNotificationAsync(
+                createNotification(),
+                {
+                  time: tomorrow,
+                  repeat: "day"
+                }
+              );
 
-            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
-            console.log("Notification set for " + tomorrow.toString());
-          } else {
-            console.log("Status for notification permission !== 'granted'");
-          }
-        });
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+              console.log("Notification set for " + tomorrow.toString());
+            } else {
+              console.log("Status for notification permission !== 'granted'");
+              showAlert();
+            }
+          })
+          .catch(() => {
+            showAlert();
+          });
       }
     });
+}
+
+function showAlert() {
+  Alert.alert(
+    "No permission for displaying notifications.",
+    "Please allow notifications in Settings.",
+    [{ text: "OK" }],
+    { cancelable: false }
+  );
+  alertShown = true;
 }
