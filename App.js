@@ -12,6 +12,7 @@ import QuizResult from "./components/QuizResult";
 import NewDeck from "./components/NewDeck";
 import NewCard from "./components/NewCard";
 import Colors from "./constants/Colors";
+import { setLocalNotification } from "./utils/helpers";
 
 const store = createStore(reducer, middleware);
 
@@ -60,6 +61,10 @@ const stackNavigator = createStackNavigator({
 const AppContainer = createAppContainer(stackNavigator);
 
 export default class App extends React.Component {
+  componentDidMount = () => {
+    setLocalNotification();
+  };
+
   render() {
     return (
       <Provider store={store}>

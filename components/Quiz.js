@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Colors from "../constants/Colors";
 import MainTextButton from "./MainTextButton";
 import { getId } from "../utils/helpers";
+import { setLocalNotification, clearNotification } from "../utils/helpers";
 
 class Quiz extends Component {
   initState = {
@@ -19,6 +20,8 @@ class Quiz extends Component {
   toQuizResult = (correctAnswers, totalQuestions) => {
     this.props.toQuizResult(correctAnswers, totalQuestions);
     this.reset();
+    // remove notification and set one for tomorrow
+    clearNotification().then(setLocalNotification);
   };
 
   handleAnswer = correct => {
@@ -59,21 +62,17 @@ class Quiz extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>{deck.title}</Text>
-        <Text>{`${questionIndex + 1}/${questions.length}`}</Text>
-
+        <Text> {deck.title} </Text>
+        <Text> {`${questionIndex + 1}/${questions.length}`} </Text>
         <View>
-          <Text>{showAnswer ? answerText : questionText}</Text>
-
+          <Text> {showAnswer ? answerText : questionText} </Text>
           <MainTextButton onPress={this.toggleAnswer}>
             {`Show ${showAnswer ? "question" : "answer"}`}
           </MainTextButton>
         </View>
-
         <MainTextButton onPress={() => this.handleAnswer(true)}>
           Correct
         </MainTextButton>
-
         <MainTextButton onPress={() => this.handleAnswer(false)}>
           Incorrect
         </MainTextButton>
@@ -112,4 +111,7 @@ function mapStateToProps({ decks }, { navigation }) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Quiz);
