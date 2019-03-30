@@ -1,17 +1,11 @@
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { FlatList, Platform, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { Component } from "react";
 
 import Colors from "../constants/Colors";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions";
+import styled from "styled-components/native";
 
 class DeckList extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -39,13 +33,12 @@ class DeckList extends Component {
   };
 
   _renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => this.navigateToDeck(item.title)}
-      style={styles.deck}
-    >
-      <Text>{item.title}</Text>
-      <Text>{"Contains " + item.questions.length + " cards"}</Text>
-    </TouchableOpacity>
+    <DeckEntry onPress={() => this.navigateToDeck(item.title)}>
+      <DeckTitle>{item.title}</DeckTitle>
+      <DeckDescription>
+        {"Contains " + item.questions.length + " cards"}
+      </DeckDescription>
+    </DeckEntry>
   );
 
   _keyExtractor = (item, index) => item.title;
@@ -53,42 +46,65 @@ class DeckList extends Component {
   render() {
     const { decks, loading } = this.props;
     return (
-      <View style={styles.container}>
+      <Container>
         {loading === true ? (
-          <Text>Please create a flashcard deck.</Text>
+          <CenterView>
+            <DeckText>Please create a flashcard deck.</DeckText>
+          </CenterView>
         ) : (
           <FlatList
-            style={styles.deckList}
             data={Object.values(decks)}
             renderItem={this._renderItem}
             keyExtractor={this._keyExtractor}
           />
         )}
-      </View>
+      </Container>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.lightPurple,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  deckList: {
-    backgroundColor: Colors.lightPurple,
-    flex: 1
-  },
-  deck: {
-    backgroundColor: Colors.primary,
-    margin: 20,
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+const Container = styled.View`
+  flex: 1;
+  background-color: ${Colors.primaryBackground};
+  color: white;
+`;
+
+const CenterView = styled.View`
+  flex: 1;
+  background-color: ${Colors.primaryBackground};
+  align-items: center;
+  justify-content: center;
+  font-size: 75px;
+`;
+
+const DeckTitle = styled.Text`
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin: 10px;
+`;
+
+const DeckDescription = styled.Text`
+  font-size: 20px;
+  color: white;
+  text-align: center;
+`;
+
+const DeckText = styled.Text`
+  font-size: 50px;
+  color: ${Colors.primary};
+  text-align: center;
+`;
+
+const DeckEntry = styled.TouchableOpacity`
+  background-color: ${Colors.primary};
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10;
+  align-items: center;
+  justify-content: center;
+`;
 
 function mapDispatchToProps(dispatch) {
   return {
