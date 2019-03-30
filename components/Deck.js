@@ -42,16 +42,6 @@ class Deck extends Component {
   }
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: Colors.lightPurple,
-//     paddingTop: Constants.statusBarHeight,
-//     alignItems: "center",
-//     justifyContent: "center"
-//   }
-// });
-
 function mapStateToProps({ decks }, props) {
   const id = getId(props.navigation);
   const deck = Object.values(decks).filter(deck => deck.title === id);

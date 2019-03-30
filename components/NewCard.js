@@ -1,17 +1,10 @@
+import { CenterView, TextInput, TitleText } from "./styled";
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  KeyboardAvoidingView
-} from "react-native";
-import { handleNewCard } from "../actions";
+
+import TextButton from "./TextButton";
 import { connect } from "react-redux";
-import MainTextButton from "./MainTextButton";
-import Colors from "../constants/Colors";
-import { Constants } from "expo";
 import { getId } from "../utils/helpers";
+import { handleNewCard } from "../actions";
 
 class NewCard extends Component {
   state = {
@@ -38,43 +31,29 @@ class NewCard extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
-        <Text>Fill in the card's question and answer.</Text>
+      <CenterView behavior="padding" enabled>
+        <TitleText>Enter question and answer</TitleText>
         <TextInput
-          style={styles.input}
           onChangeText={text => this.updateState(text, "question")}
           value={this.state.question}
           placeholder="Question"
         />
         <TextInput
-          style={styles.input}
           onChangeText={text => this.updateState(text, "answer")}
           value={this.state.answer}
           placeholder="Answer"
         />
 
-        <MainTextButton onPress={() => this.handleSubmit()}>
+        <TextButton
+          onPress={() => this.handleSubmit()}
+          disabled={!(this.state.answer.trim() && this.state.question.trim())}
+        >
           Create Card
-        </MainTextButton>
-      </KeyboardAvoidingView>
+        </TextButton>
+      </CenterView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primaryBackground,
-    paddingTop: Constants.statusBarHeight,
-    alignItems: "center",
-    justifyContent: "flex-start"
-  },
-  input: {
-    backgroundColor: Colors.primary,
-    padding: 10,
-    margin: 20
-  }
-});
 
 function mapStateToProps(state, props) {
   return {
