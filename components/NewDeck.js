@@ -1,16 +1,9 @@
+import { CenterView, TextInput, TitleText } from "./styled";
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  KeyboardAvoidingView
-} from "react-native";
+
+import TextButton from "./TextButton";
 import { connect } from "react-redux";
 import { handleNewDeck } from "../actions";
-import MainTextButton from "./MainTextButton";
-import Colors from "../constants/Colors";
-import { Constants } from "expo";
 
 class NewDeck extends Component {
   state = {
@@ -29,41 +22,25 @@ class NewDeck extends Component {
   render() {
     const { title } = this.state;
     return (
-      <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
-        <Text>Choose a title for the new deck.</Text>
+      <CenterView behavior="padding" enabled>
+        <TitleText>Enter deck title</TitleText>
 
         <TextInput
-          style={styles.input}
           onChangeText={title => this.setState({ title })}
           value={title}
           placeholder="Deck Title"
         />
 
-        <MainTextButton
+        <TextButton
           disabled={title.length < 3}
           onPress={() => this.handleSubmit()}
         >
           Create Deck
-        </MainTextButton>
-      </KeyboardAvoidingView>
+        </TextButton>
+      </CenterView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primaryBackground,
-    paddingTop: Constants.statusBarHeight,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  input: {
-    backgroundColor: Colors.primary,
-    padding: 10,
-    margin: 20
-  }
-});
 
 const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
@@ -72,7 +49,6 @@ const mapDispatchToProps = (dispatch, { navigation }) => {
       navigation.navigate("Deck", {
         id: title
       })
-    // toHomeScreen: () => navigation.navigate("Home")
   };
 };
 

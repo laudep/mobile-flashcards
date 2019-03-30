@@ -11,7 +11,7 @@ export const Container = styled.View`
   justify-content: center;
 `;
 
-export const CenterView = styled.View`
+export const CenterView = styled.KeyboardAvoidingView`
   flex: 1;
   background-color: ${Colors.primaryBackground};
   align-items: center;
@@ -21,8 +21,8 @@ export const CenterView = styled.View`
 `;
 
 export const PrimaryText = styled.Text`
-color: ${props => (props.color ? props.color : Colors.primary)};
-text-align: center;
+  color: ${props => (props.color ? props.color : Colors.primary)};
+  text-align: center;
 `;
 
 export const TitleText = styled(PrimaryText)`
@@ -34,4 +34,14 @@ export const TitleText = styled(PrimaryText)`
 export const DescriptionText = styled(PrimaryText)`
   font-size: 20px;
   margin-bottom: 10px;
+`;
+
+export const TextInput = styled.TextInput`
+  font-size: 30px;
+  min-width: 200px;
+  border: 0;
+  padding: 10px;
+  background: transparent;
+  border-bottom-width: 1px;
+  border-bottom-color: ${Colors.primary};
 `;
