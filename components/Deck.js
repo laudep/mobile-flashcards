@@ -1,10 +1,9 @@
+import { CenterView, DescriptionText, TitleText } from "./styled";
 import React, { Component } from "react";
-import { Constants } from "expo";
-import { View, Text, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import Colors from "../constants/Colors";
+
 import Pluralize from "pluralize";
-import MainTextButton from "./MainTextButton";
+import TextButton from "./TextButton";
+import { connect } from "react-redux";
 import { getId } from "../utils/helpers";
 
 class Deck extends Component {
@@ -12,11 +11,13 @@ class Deck extends Component {
     const { deck, navigation } = this.props;
     const questionCount = deck.questions.length;
     return (
-      <View style={styles.container}>
-        <Text>{deck.title}</Text>
-        <Text>{Pluralize("Card", questionCount, true)}</Text>
+      <CenterView>
+        <TitleText>{deck.title}</TitleText>
+        <DescriptionText>
+          {Pluralize("Card", questionCount, true)}
+        </DescriptionText>
 
-        <MainTextButton
+        <TextButton
           onPress={() =>
             navigation.navigate("NewCard", {
               id: deck.title
@@ -24,9 +25,9 @@ class Deck extends Component {
           }
         >
           New Card
-        </MainTextButton>
+        </TextButton>
 
-        <MainTextButton
+        <TextButton
           disabled={questionCount === 0}
           onPress={() =>
             navigation.navigate("Quiz", {
@@ -35,21 +36,21 @@ class Deck extends Component {
           }
         >
           Start a Quiz
-        </MainTextButton>
-      </View>
+        </TextButton>
+      </CenterView>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.lightPurple,
-    paddingTop: Constants.statusBarHeight,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: Colors.lightPurple,
+//     paddingTop: Constants.statusBarHeight,
+//     alignItems: "center",
+//     justifyContent: "center"
+//   }
+// });
 
 function mapStateToProps({ decks }, props) {
   const id = getId(props.navigation);

@@ -1,3 +1,4 @@
+import { CenterView, Container, DescriptionText, TitleText } from "./styled";
 import { FlatList, Platform, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { Component } from "react";
@@ -34,10 +35,10 @@ class DeckList extends Component {
 
   _renderItem = ({ item }) => (
     <DeckEntry onPress={() => this.navigateToDeck(item.title)}>
-      <DeckTitle>{item.title}</DeckTitle>
-      <DeckDescription>
+      <TitleText color="white">{item.title}</TitleText>
+      <DescriptionText color="white">
         {"Contains " + item.questions.length + " cards"}
-      </DeckDescription>
+      </DescriptionText>
     </DeckEntry>
   );
 
@@ -62,34 +63,6 @@ class DeckList extends Component {
     );
   }
 }
-
-const Container = styled.View`
-  flex: 1;
-  background-color: ${Colors.primaryBackground};
-  color: white;
-`;
-
-const CenterView = styled.View`
-  flex: 1;
-  background-color: ${Colors.primaryBackground};
-  align-items: center;
-  justify-content: center;
-  font-size: 75px;
-`;
-
-const DeckTitle = styled.Text`
-  font-size: 30px;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  margin: 10px;
-`;
-
-const DeckDescription = styled.Text`
-  font-size: 20px;
-  color: white;
-  text-align: center;
-`;
 
 const DeckText = styled.Text`
   font-size: 50px;
