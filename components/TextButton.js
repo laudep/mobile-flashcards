@@ -6,17 +6,18 @@ import styled from "styled-components/native";
 export default function TextButton({
   children = {},
   onPress = () => {},
-  disabled = false
+  disabled = false,
+  color = null
 }) {
   return (
-    <Button onPress={onPress} disabled={disabled}>
+    <Button onPress={onPress} disabled={disabled} color={color}>
       <ButtonText>{children}</ButtonText>
     </Button>
   );
 }
 
 const Button = styled.TouchableOpacity`
-  background-color: ${Colors.primary};
+  background-color: ${props => (props.color ? props.color : Colors.primary)};
   opacity: ${props => (props.disabled ? 0.5 : 1)};
   min-width: 200px;
   align-items: center;

@@ -1,10 +1,12 @@
+import { CenterView, TitleText } from "./styled";
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import { Text, View } from "react-native";
+import { clearNotification, setLocalNotification } from "../utils/helpers";
+
 import Colors from "../constants/Colors";
-import MainTextButton from "./MainTextButton";
+import TextButton from "./TextButton";
+import { connect } from "react-redux";
 import { getId } from "../utils/helpers";
-import { setLocalNotification, clearNotification } from "../utils/helpers";
 
 class Quiz extends Component {
   initState = {
@@ -62,34 +64,32 @@ class Quiz extends Component {
       answerText = questions[questionIndex].answer;
 
     return (
-      <View style={styles.container}>
-        <Text> {deck.title} </Text>
+      <CenterView>
+        <TitleText color="black">
+          {showAnswer ? answerText : questionText}{" "}
+        </TitleText>
         <Text> {`${questionIndex + 1}/${questions.length}`} </Text>
         <View>
-          <Text> {showAnswer ? answerText : questionText} </Text>
-          <MainTextButton onPress={this.toggleAnswer}>
+          <TextButton onPress={this.toggleAnswer}>
             {`Show ${showAnswer ? "question" : "answer"}`}
-          </MainTextButton>
+          </TextButton>
         </View>
-        <MainTextButton onPress={() => this.handleAnswer(true)}>
+        <TextButton
+          onPress={() => this.handleAnswer(true)}
+          color={Colors.positive}
+        >
           Correct
-        </MainTextButton>
-        <MainTextButton onPress={() => this.handleAnswer(false)}>
+        </TextButton>
+        <TextButton
+          onPress={() => this.handleAnswer(false)}
+          color={Colors.negative}
+        >
           Incorrect
-        </MainTextButton>
-      </View>
+        </TextButton>
+      </CenterView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primaryBackground,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
 
 function mapDispatchToProps(dispatch, { navigation }) {
   const id = getId(navigation);
@@ -98,7 +98,8 @@ function mapDispatchToProps(dispatch, { navigation }) {
       navigation.navigate("QuizResult", {
         id,
         correctAnswers,
-        totalQuestions
+        totalQuestions,
+        title: `Quiz Result: '${id}' `
       })
   };
 }

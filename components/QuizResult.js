@@ -1,28 +1,26 @@
+import { CenterView, DescriptionText, TitleText } from "./styled";
+
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import TextButton from "./TextButton";
 import { connect } from "react-redux";
-import Colors from "../constants/Colors";
-import MainTextButton from "./MainTextButton";
 import { getId } from "../utils/helpers";
 
 const QuizResult = props => {
   const { correctAnswers, totalQuestions, toScreen } = props;
   return (
-    <View style={styles.container}>
-      <Text>You finished the quiz!</Text>
-      <Text>
+    <CenterView>
+      <TitleText>You finished the quiz!</TitleText>
+      <DescriptionText color="black">
         Correct Answers: {correctAnswers} out of {totalQuestions}
-      </Text>
-      <Text>{((100 * correctAnswers) / totalQuestions).toFixed()}%</Text>
+      </DescriptionText>
+      <DescriptionText>
+        {((100 * correctAnswers) / totalQuestions).toFixed()}%
+      </DescriptionText>
 
-      <MainTextButton onPress={() => toScreen("Quiz")}>
-        Restart Quiz
-      </MainTextButton>
+      <TextButton onPress={() => toScreen("Quiz")}>Restart Quiz</TextButton>
 
-      <MainTextButton onPress={() => toScreen("Deck")}>
-        Return to Deck
-      </MainTextButton>
-    </View>
+      <TextButton onPress={() => toScreen("Deck")}>Return to Deck</TextButton>
+    </CenterView>
   );
 };
 
@@ -37,7 +35,6 @@ const mapDispatchToProps = (dispatch, { navigation }) => {
 };
 
 const mapStateToProps = (state, { navigation }) => {
-  console.log(navigation);
   const correctAnswers = navigation.getParam("correctAnswers", "1"),
     totalQuestions = navigation.getParam("totalQuestions", "1");
   return {
@@ -45,15 +42,6 @@ const mapStateToProps = (state, { navigation }) => {
     totalQuestions
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primaryBackground,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
 
 export default connect(
   mapStateToProps,

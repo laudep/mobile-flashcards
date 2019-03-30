@@ -1,7 +1,9 @@
 const tintColor = "#2f95dc";
-const primary = tintColor;
+const primary = "#2f95dc";
 
 export default {
+  positive: "#00FF7F",
+  negative: "orange",
   tintColor,
   tabIconDefault: "#ccc",
   tabIconSelected: tintColor,

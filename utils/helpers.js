@@ -1,6 +1,8 @@
-import { AsyncStorage, Alert } from "react-native";
-import _ from "lodash";
+import { Alert, AsyncStorage } from "react-native";
 import { Notifications, Permissions } from "expo";
+
+import NewCard from "../components/NewCard";
+import _ from "lodash";
 
 const STORAGE_KEY = "MobileFlashcards:decks";
 const NOTIFICATION_KEY = "MobileFlashcards:notifications";
@@ -109,6 +111,14 @@ export function setLocalNotification() {
           });
       }
     });
+}
+export function deleteDeck(title) {
+  return AsyncStorage.getItem(STORAGE_KEY).then(data => {
+    const { [title]: deleteDeck, ...newDecks } = JSON.parse(data);
+
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newDecks));
+    return newDecks;
+  });
 }
 
 function showAlert() {

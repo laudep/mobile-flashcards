@@ -12,7 +12,7 @@ class Deck extends Component {
     const questionCount = deck.questions.length;
     return (
       <CenterView>
-        <TitleText>{deck.title}</TitleText>
+        <TitleText color="black">{deck.title}</TitleText>
         <DescriptionText>
           {Pluralize("Card", questionCount, true)}
         </DescriptionText>
@@ -31,7 +31,8 @@ class Deck extends Component {
           disabled={questionCount === 0}
           onPress={() =>
             navigation.navigate("Quiz", {
-              id: deck.title
+              id: deck.title,
+              title: `Quiz: '${deck.title}' `
             })
           }
         >
@@ -44,9 +45,9 @@ class Deck extends Component {
 
 function mapStateToProps({ decks }, props) {
   const id = getId(props.navigation);
-  const deck = Object.values(decks).filter(deck => deck.title === id);
+  const deck = Object.values(decks).filter(deck => deck.title === id)[0];
   return {
-    deck: deck[0]
+    deck: deck
   };
 }
 
