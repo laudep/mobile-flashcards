@@ -20,13 +20,13 @@ class NewCard extends Component {
   };
 
   handleSubmit = () => {
-    const { handleCardAddition, toCardOverview } = this.props;
+    const { handleCardAddition, toDeckOverview } = this.props;
     const card = {
       question: this.state.question,
       answer: this.state.answer
     };
     handleCardAddition(card);
-    toCardOverview();
+    toDeckOverview();
   };
 
   render() {
@@ -67,9 +67,10 @@ function mapDispatchToProps(dispatch, { navigation }) {
     handleCardAddition: card => {
       dispatch(handleNewCard(id, card));
     },
-    toCardOverview: () =>
+    toDeckOverview: () =>
       navigation.navigate("Deck", {
-        id: id
+        id: id,
+        cardWasAdded: true
       })
   };
 }

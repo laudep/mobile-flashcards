@@ -5,6 +5,7 @@ import React, { Component } from "react";
 
 import Colors from "../constants/Colors";
 import { Dimensions } from "react-native";
+import DropdownAlert from "react-native-dropdownalert";
 import SwipeOut from "react-native-swipeout";
 import { connect } from "react-redux";
 import { handleDeckDeletion } from "../actions";
@@ -18,6 +19,7 @@ class DeckList extends Component {
       activeDeckTitle: ""
     };
   }
+
   static navigationOptions = ({ navigation }) => {
     return {
       headerRight: (
@@ -48,12 +50,18 @@ class DeckList extends Component {
     const isEmptyDeck =
       Object.values(this.props.decks).filter(deck => deck.title === id)[0]
         .questions.length <= 0;
+    const showDeletionAlert = title =>
+      this.dropdown.alertWithType(
+        "info",
+        "Deck deleted",
+        `Deck ${title} has been deleted 👍`
+      );
 
     isEmptyDeck
-      ? deleteDeck(id)
+      ? deleteDeck(id) && showDeletionAlert(id)
       : // Show an alert when deleting a deck that isn't empty
         Alert.alert(
-          "Alert",
+          "Deck contains cards",
           `Are you sure you want to delete deck '${id}'?`,
           [
             {
@@ -63,7 +71,7 @@ class DeckList extends Component {
             },
             {
               text: "Yes",
-              onPress: () => deleteDeck(id)
+              onPress: () => deleteDeck(id) && showDeletionAlert(id)
             }
           ],
           { cancelable: true }
@@ -112,7 +120,6 @@ class DeckList extends Component {
 
   render() {
     const { decks, loading } = this.props;
-
     return (
       <Container>
         {loading === true ? (
@@ -126,6 +133,10 @@ class DeckList extends Component {
             keyExtractor={this._keyExtractor}
           />
         )}
+        <DropdownAlert
+          ref={ref => (this.dropdown = ref)}
+          infoColor={Colors.primary}
+        />
       </Container>
     );
   }

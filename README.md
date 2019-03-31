@@ -2,7 +2,7 @@
 
 This project is a simple mobile flashcard app.  
 Built using React Native and Redux, it was developed as a project for the [Udacity React Nanodegree Program](https://www.udacity.com/course/react-nanodegree--nd019).  
-The app has only been tested on an Android simulator.
+Note: This app has only been tested on Android devices.
 
 ## Table of Contents
 
