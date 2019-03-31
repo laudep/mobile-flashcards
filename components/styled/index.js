@@ -1,5 +1,6 @@
 import Colors from "../../constants/Colors";
 import { Constants } from "expo";
+import { getScreenWidth } from "../../utils/helpers";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
@@ -39,7 +40,7 @@ export const DescriptionText = styled(PrimaryText)`
 
 export const TextInput = styled.TextInput`
   font-size: 30px;
-  min-width: 200px;
+  min-width: ${getScreenWidth(0.9)};
   border: 0;
   padding: 10px;
   background: transparent;

@@ -1,11 +1,10 @@
-import { Alert, AsyncStorage } from "react-native";
+import { Alert, AsyncStorage, Dimensions } from "react-native";
 import { Notifications, Permissions } from "expo";
 
 import _ from "lodash";
 
 const STORAGE_KEY = "MobileFlashcards:decks";
 const NOTIFICATION_KEY = "MobileFlashcards:notifications";
-let alertShown = false;
 
 export function getId(navigation) {
   let id = "No id found.";
@@ -118,6 +117,10 @@ export function deleteDeck(title) {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newDecks));
     return newDecks;
   });
+}
+
+export function getScreenWidth(conversionFactor = 1) {
+  return Math.round(Dimensions.get("window").width * conversionFactor);
 }
 
 function showAlert() {

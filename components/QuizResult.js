@@ -29,7 +29,8 @@ const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
     toScreen: screen =>
       navigation.navigate(screen, {
-        id
+        id,
+        cardWasAdded: false
       })
   };
 };

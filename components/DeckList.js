@@ -4,10 +4,10 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { Component } from "react";
 
 import Colors from "../constants/Colors";
-import { Dimensions } from "react-native";
 import DropdownAlert from "react-native-dropdownalert";
 import SwipeOut from "react-native-swipeout";
 import { connect } from "react-redux";
+import { getScreenWidth } from "../utils/helpers";
 import { handleDeckDeletion } from "../actions";
 import { handleInitialData } from "../actions";
 import styled from "styled-components/native";
@@ -106,7 +106,7 @@ class DeckList extends Component {
       <DeckEntry
         index={item.index}
         onPress={() => this.navigateToDeck(item.title)}
-        minWidth={Math.round(Dimensions.get("window").width * 0.9)}
+        minWidth={getScreenWidth(0.9)}
       >
         <TitleText color="white">{item.title}</TitleText>
         <DescriptionText color="white">

@@ -1,6 +1,7 @@
 import Colors from "../constants/Colors";
 import { PrimaryText } from "./styled";
 import React from "react";
+import { getScreenWidth } from "../utils/helpers";
 import styled from "styled-components/native";
 
 export default function TextButton({
@@ -19,7 +20,7 @@ export default function TextButton({
 const Button = styled.TouchableOpacity`
   background-color: ${props => (props.color ? props.color : Colors.primary)};
   opacity: ${props => (props.disabled ? 0.5 : 1)};
-  min-width: 200px;
+  min-width: ${getScreenWidth(0.9)};
   align-items: center;
   border-radius: 10px;
   padding: 20px;
