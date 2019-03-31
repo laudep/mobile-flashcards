@@ -30,10 +30,11 @@ Alernatively you can install [mobile-flashcards-signed.apk](../build/mobile-flas
 
 Make sure to have [Node.js](https://nodejs.org/en/) installed.  
 To be able to preview the app install the Expo app on your [Android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [iOS](https://itunes.apple.com/app/apple-store/id982107779) device.  
-Clone the project, install the dependencies and run the development server:
+Clone the project, navigate the `src` directory, install the dependencies and run the development server:
 
 ```
 git clone https://github.com/laudep/mobile-flashcards.git
+cd mobile-flashcards/src
 yarn install
 yarn start
 ```
