@@ -7,6 +7,19 @@ import { connect } from "react-redux";
 import { getId } from "../utils/helpers";
 
 class Deck extends Component {
+  componentDidMount = () => {
+    const { skipNewDeck } = this.props;
+    // avoid returning to "Create Deck" after creation
+    skipNewDeck();
+    this._sub = this.props.navigation.addListener("didFocus", payload => {
+      skipNewDeck();
+    });
+  };
+
+  componentWillUnmount() {
+    this._sub.remove();
+  }
+
   render() {
     const { deck, navigation } = this.props;
     const questionCount = deck.questions.length;
@@ -43,6 +56,18 @@ class Deck extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch, { navigation }) => {
+  return {
+    // Force back button behaviour to return to deck list
+    // (avoids returning to "Create Deck" after creation)
+    skipNewDeck: () => {
+      navigation.dispatch({
+        type: "RemoveNewDeckScreen"
+      });
+    }
+  };
+};
+
 function mapStateToProps({ decks }, props) {
   const id = getId(props.navigation);
   const deck = Object.values(decks).filter(deck => deck.title === id)[0];
@@ -51,4 +76,7 @@ function mapStateToProps({ decks }, props) {
   };
 }
 
-export default connect(mapStateToProps)(Deck);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Deck);

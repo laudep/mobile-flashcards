@@ -21,6 +21,7 @@ class NewDeck extends Component {
 
   render() {
     const { title } = this.state;
+
     return (
       <CenterView behavior="padding" enabled>
         <TitleText>Enter deck title</TitleText>
@@ -45,10 +46,11 @@ class NewDeck extends Component {
 const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
     handleDeckAddition: title => dispatch(handleNewDeck(title)),
-    toDeck: title =>
+    toDeck: title => {
       navigation.navigate("Deck", {
         id: title
-      })
+      });
+    }
   };
 };
 

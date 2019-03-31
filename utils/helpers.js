@@ -1,7 +1,6 @@
 import { Alert, AsyncStorage } from "react-native";
 import { Notifications, Permissions } from "expo";
 
-import NewCard from "../components/NewCard";
 import _ from "lodash";
 
 const STORAGE_KEY = "MobileFlashcards:decks";

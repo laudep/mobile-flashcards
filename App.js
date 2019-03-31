@@ -1,5 +1,4 @@
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 
 import Colors from "./constants/Colors";
@@ -18,22 +17,11 @@ import { setLocalNotification } from "./utils/helpers";
 
 const store = createStore(reducer, middleware);
 
-// replace(/([a-z0-9])([A-Z])/g, '$1 $2'))
-
 const stackNavigator = createStackNavigator({
   Home: {
     screen: DeckList,
     navigationOptions: ({ navigation }) => ({
       title: navigation.getParam("title", "Deck List")
-      // headerRight: (
-      //   <TouchableOpacity onPress={() => navigation.navigate("NewDeck")}>
-      //     {Platform.OS === "ios" ? (
-      //       <Ionicons name="ios-add" color={Colors.primary} size={40} />
-      //     ) : (
-      //       <MaterialIcons name="add" color={Colors.primary} size={40} />
-      //     )}
-      //   </TouchableOpacity>
-      // )
     })
   },
   Deck: {
@@ -70,6 +58,24 @@ const stackNavigator = createStackNavigator({
     })
   }
 });
+
+const prevGetStateForActionHomeStack = stackNavigator.router.getStateForAction;
+stackNavigator.router = {
+  ...stackNavigator.router,
+  getStateForAction(action, state) {
+    if (state && action.type === "RemoveNewDeckScreen") {
+      const routes = state.routes.filter(
+        route => route.routeName !== "NewDeck"
+      );
+      return {
+        ...state,
+        routes,
+        index: routes.length - 1
+      };
+    }
+    return prevGetStateForActionHomeStack(action, state);
+  }
+};
 
 const AppContainer = createAppContainer(stackNavigator);
 
