@@ -21,7 +21,10 @@ To test the application on your Android device, scan the QR code below in the
 [Expo app](https://play.google.com/store/apps/details?id=host.exp.exponent).  
 Alernatively you can install [mobile-flashcards-signed.apk](../build/mobile-flashcards-signed.apk).
 
-<div style="text-align:center"><img src ="qr-expo-android.png" alt="Expo Android QR code" title="Expo Android QR code" /></div>
+<div style="text-align:center">
+<a href="https://appetize.io/embed/p9br5mj94vy278rnxdjyu6fu90?device=nexus5&scale=75&orientation=portrait&osVersion=8.1">
+<img src ="qr-expo-android.png" alt="Expo Android QR code" title="Expo Android QR code" /></a>
+</div>
 
 ## Running the application
 
