@@ -3,7 +3,8 @@
 This project is a simple mobile flashcard app.  
 Built using React Native and Redux with [Expo](https://expo.io/), it was developed as a project for the [Udacity React Nanodegree Program](https://www.udacity.com/course/react-nanodegree--nd019).
 
-Users can add and remove decks to which any number of cards containing questions and answers can be added. After adding cards to a deck a quiz can be taken.
+Users can add and remove decks to which any number of cards containing questions and answers can be added.  
+After adding cards to a deck a quiz can be taken.
 
 Note: This app has only been tested for Android devices.
 
@@ -14,8 +15,8 @@ Note: This app has only been tested for Android devices.
 - [Create React Native App and Expo](#create-react-native-app-and-expo)
 
 ## Demo
-<iframe src="https://appetize.io/embed/p9br5mj94vy278rnxdjyu6fu90?device=nexus5&scale=100&autoplay=false&orientation=portrait&deviceColor=black" width="400px" height="795px" frameborder="0" scrolling="no"></iframe>  
-                    
+You can test the app online [here](https://appetize.io/embed/p9br5mj94vy278rnxdjyu6fu90?device=nexus5&scale=75&orientation=portrait&osVersion=8.1).  
+
 To test the application on your Android device, scan the QR code below in the
 [Expo app](https://play.google.com/store/apps/details?id=host.exp.exponent).  
 Alernatively you can install [mobile-flashcards-signed.apk](../build/mobile-flashcards-signed.apk).
