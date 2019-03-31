@@ -28,6 +28,8 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-expo": "^5.0.0",
     "jest-expo": "^32.0.0"
   },

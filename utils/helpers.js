@@ -1,10 +1,9 @@
 import { Alert, AsyncStorage, Dimensions } from "react-native";
 import { Notifications, Permissions } from "expo";
 
-import _ from "lodash";
-
 const STORAGE_KEY = "MobileFlashcards:decks";
 const NOTIFICATION_KEY = "MobileFlashcards:notifications";
+let alertShown = false;
 
 export function getId(navigation) {
   let id = "No id found.";
@@ -24,7 +23,7 @@ export function getDecks() {
 
 export function getDeck(id) {
   return AsyncStorage.getItem(STORAGE_KEY).then(data => {
-    return _.get(JSON.parse(data), id);
+    return Object.values(JSON.parse(data)).filter(deck => deck.title === id)[0];
   });
 }
 
