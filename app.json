@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.laudep.mobileflashcards"
+    },
+    "android": {
+      "package": "com.laudep.mobileflashcards"
     }
   }
 }
