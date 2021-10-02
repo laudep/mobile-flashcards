@@ -6,7 +6,7 @@ Built using React Native and Redux with [Expo](https://expo.io/), it was develop
 Users can add and remove decks to which any number of cards containing questions and answers can be added.  
 After adding cards to a deck a quiz can be taken.
 
-Note: This app has only been tested for Android devices.
+Note: This app has only been tested for Android devices. The code dates from 2018 and is dated.
 
 ## Table of Contents
 
